@@ -14,6 +14,7 @@
 		11D082732590CFD600978954 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11D082722590CFD600978954 /* Assets.xcassets */; };
 		11D082762590CFD600978954 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11D082742590CFD600978954 /* LaunchScreen.storyboard */; };
 		11D082792590CFD600978954 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082782590CFD600978954 /* main.m */; };
+		11D082832590D17700978954 /* HTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082822590D17700978954 /* HTTPService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		11D082752590CFD600978954 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11D082772590CFD600978954 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11D082782590CFD600978954 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		11D082812590D17700978954 /* HTTPService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPService.h; sourceTree = "<group>"; };
+		11D082822590D17700978954 /* HTTPService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 		11D082652590CFD400978954 /* GithubFinder */ = {
 			isa = PBXGroup;
 			children = (
+				11D082802590D15700978954 /* Services */,
 				11D082662590CFD400978954 /* AppDelegate.h */,
 				11D082672590CFD400978954 /* AppDelegate.m */,
 				11D082692590CFD400978954 /* SceneDelegate.h */,
@@ -74,6 +78,15 @@
 				11D082782590CFD600978954 /* main.m */,
 			);
 			path = GithubFinder;
+			sourceTree = "<group>";
+		};
+		11D082802590D15700978954 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				11D082812590D17700978954 /* HTTPService.h */,
+				11D082822590D17700978954 /* HTTPService.m */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11D0826E2590CFD400978954 /* ViewController.m in Sources */,
+				11D082832590D17700978954 /* HTTPService.m in Sources */,
 				11D082682590CFD400978954 /* AppDelegate.m in Sources */,
 				11D082792590CFD600978954 /* main.m in Sources */,
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
