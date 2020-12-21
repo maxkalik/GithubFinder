@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^onComplete)(NSDictionary * __nullable dataDict, NSString * __nullable errorMessage);
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HTTPService : NSObject
@@ -14,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)sharedInstance;
 
-- (void)fetchUsers;
+- (void)fetchUsersByName:(NSString  *)userName :(nullable onComplete)completionHandler;
+- (void)fetchReposFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler;
 
 @end
 

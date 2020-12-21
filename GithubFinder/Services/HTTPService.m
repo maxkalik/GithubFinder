@@ -5,10 +5,13 @@
 //  Created by Maksim Kalik on 12/21/20.
 //
 
+//https://api.github.com/search/users?q=max
+
 #import "HTTPService.h"
 
 #define URL_BASE "https://api.github.com/"
 #define USERS "users"
+#define GISTS "gists/"
 #define SEARCH "search/users"
 
 @implementation HTTPService
@@ -31,16 +34,35 @@
     return uniqueInstance;
 }
 
-- (void)fetchUsers {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s", URL_BASE, USERS]];
+- (void)fetchUsersByName:(NSString  *)userName :(nullable onComplete)completionHandler {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@", URL_BASE, SEARCH, userName]];
+    [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+        completionHandler(dataDict, errorMessage);
+    }];
+}
+
+- (void)fetchReposFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler {
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+        completionHandler(dataDict, errorMessage);
+    }];
+}
+
+- (void)fetchDataFromUrl:(NSURL *)url :(nullable onComplete)completionHandler {
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (data != nil) {
             NSError *err;
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+            
             if (err == nil) {
-                NSLog(@"JSON: %@", json);
+                completionHandler(json, nil);
+            } else {
+                completionHandler(nil, @"Data is not readable for this time");
             }
+        } else {
+            NSLog(@"Network error: %@", error.debugDescription);
+            completionHandler(nil, @"Problem connecting to the server");
         }
     }] resume];
 }
