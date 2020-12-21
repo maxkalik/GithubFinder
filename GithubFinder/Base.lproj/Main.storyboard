@@ -37,7 +37,7 @@
                             <constraint firstItem="MmN-Wt-axM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="p5F-c0-Fol"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="9cJ-Ef-AWy"/>
+                    <navigationItem key="navigationItem" id="EaM-Xk-6Ff"/>
                     <connections>
                         <outlet property="searchBar" destination="MmN-Wt-axM" id="243-ya-OP5"/>
                         <outlet property="tableView" destination="cHg-u1-mxb" id="ZsI-U9-Dgl"/>

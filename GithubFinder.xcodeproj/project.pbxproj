@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1189630F25914F0A002D2522 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189630E25914F0A002D2522 /* User.m */; };
+		118963162591573C002D2522 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 118963142591573C002D2522 /* HomeTableViewCell.m */; };
+		118963172591573C002D2522 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118963152591573C002D2522 /* HomeTableViewCell.xib */; };
 		11D082682590CFD400978954 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082672590CFD400978954 /* AppDelegate.m */; };
 		11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826A2590CFD400978954 /* SceneDelegate.m */; };
 		11D0826E2590CFD400978954 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826D2590CFD400978954 /* HomeViewController.m */; };
@@ -18,6 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1189630D25914F0A002D2522 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		1189630E25914F0A002D2522 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		118963132591573C002D2522 /* HomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
+		118963142591573C002D2522 /* HomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
+		118963152591573C002D2522 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
 		11D082632590CFD400978954 /* GithubFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D082662590CFD400978954 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11D082672590CFD400978954 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -57,6 +65,25 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		1189630C25914EF7002D2522 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1189630D25914F0A002D2522 /* User.h */,
+				1189630E25914F0A002D2522 /* User.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1189631225915710002D2522 /* XIB */ = {
+			isa = PBXGroup;
+			children = (
+				118963132591573C002D2522 /* HomeTableViewCell.h */,
+				118963142591573C002D2522 /* HomeTableViewCell.m */,
+				118963152591573C002D2522 /* HomeTableViewCell.xib */,
+			);
+			path = XIB;
+			sourceTree = "<group>";
+		};
 		11D0825A2590CFD400978954 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +103,8 @@
 		11D082652590CFD400978954 /* GithubFinder */ = {
 			isa = PBXGroup;
 			children = (
+				1189631225915710002D2522 /* XIB */,
+				1189630C25914EF7002D2522 /* Models */,
 				11D082802590D15700978954 /* Services */,
 				1189630625912C81002D2522 /* Supporting Files */,
 				11D0826C2590CFD400978954 /* HomeViewController.h */,
@@ -155,6 +184,7 @@
 			files = (
 				11D082762590CFD600978954 /* LaunchScreen.storyboard in Resources */,
 				11D082732590CFD600978954 /* Assets.xcassets in Resources */,
+				118963172591573C002D2522 /* HomeTableViewCell.xib in Resources */,
 				11D082712590CFD400978954 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,7 +198,9 @@
 			files = (
 				11D0826E2590CFD400978954 /* HomeViewController.m in Sources */,
 				11D082832590D17700978954 /* HTTPService.m in Sources */,
+				1189630F25914F0A002D2522 /* User.m in Sources */,
 				11D082682590CFD400978954 /* AppDelegate.m in Sources */,
+				118963162591573C002D2522 /* HomeTableViewCell.m in Sources */,
 				11D082792590CFD600978954 /* main.m in Sources */,
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
 			);

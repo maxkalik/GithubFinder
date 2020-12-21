@@ -7,8 +7,9 @@
 
 #import "HomeViewController.h"
 #import "HTTPService.h"
+#import "HomeTableViewCell.h"
 
-@interface HomeViewController ()<UISearchBarDelegate>
+@interface HomeViewController ()<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -20,32 +21,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.searchBar.delegate = self;
     
+    [self tableView].delegate = self;
+    [self tableView].dataSource = self;
+    [self searchBar].delegate = self;
     self.title = @"Github Finder";
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.hidesBarsWhenKeyboardAppears = true;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"HomeTableViewCell" bundle:nil] forCellReuseIdentifier:@"HomeTableViewCell"];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    // [[HTTPService sharedInstance] fetchUsersByName:@"maxkalik" :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-    //     if (dataDict) {
-    // NSNumber *totalCount = [dataDict objectForKey:@"total_count"];
-    // NSLog(@"%@", totalCount);
-    //         NSArray *items = [dataDict objectForKey:@"items"];
-    //         if (items.count > 0) {
-    //             NSString *reposUrl = [items[0] objectForKey:@"repos_url"];
-    //             // NSLog(@"%@", reposUrl);
-    //
-    //             [[HTTPService sharedInstance] fetchReposFromUrl:reposUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-    //                 NSLog(@"%@", dataDict);
-    //             }];
-    //         }
-    //     } else if (errorMessage) {
-    //         // Display alert
-    //     }
-    // }];
+    // self.navigationController.hidesBarsOnSwipe = false;
+    // self.navigationController.hidesBarsOnTap = true;
+    // self.navigationController.hidesBarsWhenKeyboardAppears = true;
+    
 }
 
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
@@ -61,10 +57,6 @@
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchForKeyword:) userInfo:searchText repeats:NO];
     
-    // self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:NO block:^(NSTimer * _Nonnull timer) {
-    //     NSLog(@"%@", searchText);
-    // }];
-    
 }
 
 - (void)searchForKeyword:(NSTimer *)timer {
@@ -76,25 +68,50 @@
             if (dataDict) {
                 NSNumber *totalCount = [dataDict objectForKey:@"total_count"];
                 NSLog(@"%@", totalCount);
-                    // NSArray *items = [dataDict objectForKey:@"items"];
-                    // if (items.count > 0) {
-                    //     NSString *reposUrl = [items[0] objectForKey:@"repos_url"];
-                    //     // NSLog(@"%@", reposUrl);
-                    //
-                    //     [[HTTPService sharedInstance] fetchReposFromUrl:reposUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-                    //         NSLog(@"%@", dataDict);
-                    //     }];
-                    // }
+                if (totalCount > 0) {
+                    NSArray *items = [dataDict objectForKey:@"items"];
+                    
+                    if (items.count > 0) {
+                        NSDictionary *user = [items objectAtIndex:0];
+                        NSString *userUrl = [user objectForKey:@"url"];
+                        NSLog(@"%@", userUrl);
+                        [[HTTPService sharedInstance] fetchReposFromUrl:userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+                            NSLog(@"%@", dataDict);
+                        }];
+                    }
+                }
             } else if (errorMessage) {
                     // Display alert
             }
         }];
     }
-    
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     NSLog(@"text did end editing");
+    [self.navigationController setNavigationBarHidden: NO animated:YES];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [self.navigationController setNavigationBarHidden: YES animated:YES];
+}
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCell"];
+    [cell configureWithUserUrl:@"some url"];
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"did select");
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 84.0;
 }
 
 @end
