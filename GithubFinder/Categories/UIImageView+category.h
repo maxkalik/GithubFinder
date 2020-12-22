@@ -1,5 +1,5 @@
 //
-//  DetailsViewController.h
+//  UIImageView+UIImageView.h
 //  GithubFinder
 //
 //  Created by Maksim Kalik on 12/22/20.
@@ -9,7 +9,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetailsViewController : UIViewController
+@interface UIImageView (category)
+
+-(void)loadFromUrl:(NSURL *)url;
 
 @end
 
