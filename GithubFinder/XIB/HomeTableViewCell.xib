@@ -22,38 +22,26 @@
                             <constraint firstAttribute="width" secondItem="89Z-4N-xBQ" secondAttribute="height" multiplier="1:1" id="3Q7-i8-BPc"/>
                         </constraints>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZOe-Pw-xIH">
-                        <rect key="frame" x="94" y="19.5" width="278" height="51"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maksim Kalik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcX-jX-vsO">
-                                <rect key="frame" x="0.0" y="0.0" width="278" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zr7-S4-WAq">
-                                <rect key="frame" x="0.0" y="30.5" width="278" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maksim Kalik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcX-jX-vsO">
+                        <rect key="frame" x="94" y="35" width="278" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="89Z-4N-xBQ" secondAttribute="bottom" constant="8" id="7rq-Gc-LVh"/>
                     <constraint firstItem="89Z-4N-xBQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="9oi-mM-GCi"/>
-                    <constraint firstItem="ZOe-Pw-xIH" firstAttribute="leading" secondItem="89Z-4N-xBQ" secondAttribute="trailing" constant="12" id="BcH-pw-4Oi"/>
-                    <constraint firstItem="ZOe-Pw-xIH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="E8o-ug-QlU"/>
+                    <constraint firstItem="wcX-jX-vsO" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AGs-CB-RFB"/>
+                    <constraint firstItem="wcX-jX-vsO" firstAttribute="leading" secondItem="89Z-4N-xBQ" secondAttribute="trailing" constant="12" id="Jyy-Ul-YFI"/>
                     <constraint firstItem="89Z-4N-xBQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Qk9-RZ-6Ui"/>
-                    <constraint firstAttribute="trailing" secondItem="ZOe-Pw-xIH" secondAttribute="trailing" constant="12" id="Wgf-bM-vWV"/>
                     <constraint firstItem="89Z-4N-xBQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Yf4-H9-Nsi"/>
+                    <constraint firstAttribute="trailing" secondItem="wcX-jX-vsO" secondAttribute="trailing" constant="12" id="quW-8t-F1Q"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="avatarImgView" destination="89Z-4N-xBQ" id="rQf-Lh-TTV"/>
-                <outlet property="bioLabel" destination="Zr7-S4-WAq" id="aqg-IE-19e"/>
                 <outlet property="nameLabel" destination="wcX-jX-vsO" id="jNE-Ch-eZd"/>
             </connections>
             <point key="canvasLocation" x="174" y="90"/>

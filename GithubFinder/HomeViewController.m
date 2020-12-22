@@ -67,19 +67,11 @@
                 if (totalCount > 0) {
                     NSMutableArray *items = [dataDict objectForKey:@"items"];
                     self.users = items;
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];                        
                     });
 
-                    // if (items.count > 0) {
-                    //     // self. = items;
-                    //     NSDictionary *user = [items objectAtIndex:0];
-                    //     NSString *userUrl = [user objectForKey:@"url"];
-                    //     NSLog(@"%@", userUrl);
-                    //     [[HTTPService sharedInstance] fetchReposFromUrl:userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-                    //         NSLog(@"%@", dataDict);
-                    //     }];
-                    // }
                 }
             } else if (errorMessage) {
                     // Display alert
@@ -99,20 +91,24 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCell"];
-    NSDictionary *user = [self.users objectAtIndex:indexPath.row];
-    NSString *userUrl = [user objectForKey:@"url"];
-    [cell configureWithUserUrl:userUrl];
+    // NSDictionary *user = [self.users objectAtIndex:indexPath.row];
+    // NSLog(@"%@", user);
+    // NSString *userUrl = [user objectForKey:@"url"];
+    // [cell configureWithUserUrl:userUrl];
+    [cell configureWithUserResponse:[self.users objectAtIndex:indexPath.row]];
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"%lu", (unsigned long)self.users.count);
+    // NSLog(@"%lu", (unsigned long)self.users.count);
     return [self.users count];
     // return 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"did select");
+    
+    
+    NSLog(@"%@", [self.users objectAtIndex:indexPath.row]);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

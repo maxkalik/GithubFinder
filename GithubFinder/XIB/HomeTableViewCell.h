@@ -6,12 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeTableViewCell : UITableViewCell
 
-- (void)configureWithUserUrl:(NSString *)url;
+// - (void)configureWithUserUrl:(nullable NSString *)url;
+- (void)configureWithUserResponse:(NSDictionary *)userResponse;
 
 @end
 
