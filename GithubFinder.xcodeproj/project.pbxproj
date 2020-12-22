@@ -10,6 +10,7 @@
 		1189630F25914F0A002D2522 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189630E25914F0A002D2522 /* User.m */; };
 		118963162591573C002D2522 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 118963142591573C002D2522 /* HomeTableViewCell.m */; };
 		118963172591573C002D2522 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118963152591573C002D2522 /* HomeTableViewCell.xib */; };
+		1189632425922BBD002D2522 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189632325922BBD002D2522 /* DetailsViewController.m */; };
 		11D082682590CFD400978954 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082672590CFD400978954 /* AppDelegate.m */; };
 		11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826A2590CFD400978954 /* SceneDelegate.m */; };
 		11D0826E2590CFD400978954 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826D2590CFD400978954 /* HomeViewController.m */; };
@@ -26,6 +27,8 @@
 		118963132591573C002D2522 /* HomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
 		118963142591573C002D2522 /* HomeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewCell.m; sourceTree = "<group>"; };
 		118963152591573C002D2522 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
+		1189632225922BBD002D2522 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		1189632325922BBD002D2522 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		11D082632590CFD400978954 /* GithubFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D082662590CFD400978954 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11D082672590CFD400978954 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 				1189630625912C81002D2522 /* Supporting Files */,
 				11D0826C2590CFD400978954 /* HomeViewController.h */,
 				11D0826D2590CFD400978954 /* HomeViewController.m */,
+				1189632225922BBD002D2522 /* DetailsViewController.h */,
+				1189632325922BBD002D2522 /* DetailsViewController.m */,
 				11D0826F2590CFD400978954 /* Main.storyboard */,
 				11D082722590CFD600978954 /* Assets.xcassets */,
 				11D082772590CFD600978954 /* Info.plist */,
@@ -203,6 +208,7 @@
 				118963162591573C002D2522 /* HomeTableViewCell.m in Sources */,
 				11D082792590CFD600978954 /* main.m in Sources */,
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
+				1189632425922BBD002D2522 /* DetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +285,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -332,7 +338,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
