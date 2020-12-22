@@ -6,6 +6,7 @@
 //
 
 #import "HomeTableViewCell.h"
+#import "HTTPService.h"
 #import "User.h"
 
 @interface HomeTableViewCell ()
@@ -26,6 +27,8 @@
 
 - (void)configureWithUserUrl:(NSString *)url {
     NSLog(@"%@", url);
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

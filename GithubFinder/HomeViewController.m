@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (strong, nonatomic, nullable) NSMutableArray *users;
 @property (strong, nonatomic, nullable) NSTimer *timer;
 @end
 
@@ -20,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     [self tableView].delegate = self;
     [self tableView].dataSource = self;
@@ -35,20 +35,16 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    // self.navigationController.hidesBarsOnSwipe = false;
-    // self.navigationController.hidesBarsOnTap = true;
-    // self.navigationController.hidesBarsWhenKeyboardAppears = true;
-    
-}
-
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (!searchText.length) {
+        self.users = nil;
+        [self.tableView reloadData];
+    }
     
     if (self.timer != nil) {
         [self.timer invalidate];
@@ -69,16 +65,21 @@
                 NSNumber *totalCount = [dataDict objectForKey:@"total_count"];
                 NSLog(@"%@", totalCount);
                 if (totalCount > 0) {
-                    NSArray *items = [dataDict objectForKey:@"items"];
-                    
-                    if (items.count > 0) {
-                        NSDictionary *user = [items objectAtIndex:0];
-                        NSString *userUrl = [user objectForKey:@"url"];
-                        NSLog(@"%@", userUrl);
-                        [[HTTPService sharedInstance] fetchReposFromUrl:userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-                            NSLog(@"%@", dataDict);
-                        }];
-                    }
+                    NSMutableArray *items = [dataDict objectForKey:@"items"];
+                    self.users = items;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView reloadData];                        
+                    });
+
+                    // if (items.count > 0) {
+                    //     // self. = items;
+                    //     NSDictionary *user = [items objectAtIndex:0];
+                    //     NSString *userUrl = [user objectForKey:@"url"];
+                    //     NSLog(@"%@", userUrl);
+                    //     [[HTTPService sharedInstance] fetchReposFromUrl:userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+                    //         NSLog(@"%@", dataDict);
+                    //     }];
+                    // }
                 }
             } else if (errorMessage) {
                     // Display alert
@@ -98,12 +99,16 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCell"];
-    [cell configureWithUserUrl:@"some url"];
+    NSDictionary *user = [self.users objectAtIndex:indexPath.row];
+    NSString *userUrl = [user objectForKey:@"url"];
+    [cell configureWithUserUrl:userUrl];
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    NSLog(@"%lu", (unsigned long)self.users.count);
+    return [self.users count];
+    // return 10;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
