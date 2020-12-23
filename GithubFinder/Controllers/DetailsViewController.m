@@ -29,7 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    // self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
     
     self.scrollView.delegate = self;
     if (@available(iOS 11.0, *)) {
@@ -56,6 +56,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.avatarImage.layer.transform = [[DetailsHelper sharedInstance] scaleImageViewOnScroll:self.avatarImage :scrollView];
+}
+
+- (IBAction)profileButtonTapped:(UIButton *)sender {
+    NSLog(@"tapped");
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://www.github.com"]];
 }
 
 @end

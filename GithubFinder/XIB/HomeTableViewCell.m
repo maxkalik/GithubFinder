@@ -22,6 +22,11 @@
 
 @implementation HomeTableViewCell
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.avatarImgView.image = [UIImage imageNamed:@""];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.avatarImgView.hidden = YES;
