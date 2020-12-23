@@ -26,6 +26,8 @@
     [super awakeFromNib];
     self.avatarImgView.hidden = YES;
     [self.activityIndicator startAnimating];
+    self.avatarImgView.layer.cornerRadius = 28;
+    self.avatarImgView.layer.masksToBounds = YES;
 }
 
 - (void)configureWithUserResponse:(NSDictionary *)userResponse {
@@ -33,13 +35,11 @@
     NSString *login = [userResponse safeObjectForKey:@"login"];
     NSURL *avatarUrl = [NSURL URLWithString:avatarUrlString];
     
-    // [self.avatarImgView loadFromUrl:avatarUrl];
-    [self.avatarImgView loadFromUrl:avatarUrl :^{
-        self.avatarImgView.hidden = NO;
-        [self.activityIndicator stopAnimating];
-    }];
+    [self.avatarImgView loadFromUrl:avatarUrl];
     [self nameLabel].text = login;
     
+    self.avatarImgView.hidden = NO;
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

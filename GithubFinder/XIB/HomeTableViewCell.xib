@@ -29,9 +29,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="QNk-eg-pAP">
-                        <rect key="frame" x="35" y="35" width="20" height="20"/>
-                    </activityIndicatorView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="89Z-4N-xBQ" secondAttribute="bottom" constant="8" id="7rq-Gc-LVh"/>
@@ -40,14 +37,11 @@
                     <constraint firstItem="wcX-jX-vsO" firstAttribute="leading" secondItem="89Z-4N-xBQ" secondAttribute="trailing" constant="12" id="Jyy-Ul-YFI"/>
                     <constraint firstItem="89Z-4N-xBQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Qk9-RZ-6Ui"/>
                     <constraint firstItem="89Z-4N-xBQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Yf4-H9-Nsi"/>
-                    <constraint firstItem="QNk-eg-pAP" firstAttribute="centerY" secondItem="89Z-4N-xBQ" secondAttribute="centerY" id="fHY-n8-64d"/>
-                    <constraint firstItem="QNk-eg-pAP" firstAttribute="centerX" secondItem="89Z-4N-xBQ" secondAttribute="centerX" id="jOU-Yf-nHC"/>
                     <constraint firstAttribute="trailing" secondItem="wcX-jX-vsO" secondAttribute="trailing" constant="12" id="quW-8t-F1Q"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="activityIndicator" destination="QNk-eg-pAP" id="7H5-yK-9ei"/>
                 <outlet property="avatarImgView" destination="89Z-4N-xBQ" id="rQf-Lh-TTV"/>
                 <outlet property="nameLabel" destination="wcX-jX-vsO" id="jNE-Ch-eZd"/>
             </connections>

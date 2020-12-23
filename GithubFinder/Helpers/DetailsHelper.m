@@ -31,11 +31,18 @@
     return uniqueInstance;
 }
 
-- (CGAffineTransform)transformImageView:(UIImageView *)imageView :(UIScrollView *)scrollView {
-    float scale = 1.0f + fabs(scrollView.contentOffset.y) / scrollView.frame.size.height;
-    scale = MAX(0.0f, scale);
-    CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
-    return transform;
+- (CATransform3D)scaleImageViewOnScroll:(UIImageView *)imageView :(UIScrollView *)scrollView {
+    
+    float offset = scrollView.contentOffset.y;
+    
+    if (offset < 0.0) {
+        CATransform3D transform = CATransform3DTranslate(CATransform3DIdentity, 0, offset, 0);
+        float scaleFactor = 1 + (-1 * offset / (imageView.frame.size.height / 2));
+        transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1);
+        return transform;
+    } else {
+        return CATransform3DIdentity;
+    }
 }
 
 - (NSArray<NSString *> *)prepareLabelTextFromUserData:(User *)user :(NSString *)labelGroup {

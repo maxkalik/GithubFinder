@@ -39,11 +39,7 @@
         
         User *user = [[User alloc] initWithDictionary:dataDict];
         
-        // [self.avatarImage loadFromUrl:user.avatarUrl];
-        [self.avatarImage loadFromUrl:user.avatarUrl :^{
-            NSLog(@"complete");
-            // loader complete
-        }];
+        [self.avatarImage loadFromUrl:user.avatarUrl];
 
         NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
         NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
@@ -58,7 +54,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.avatarImage.transform = [[DetailsHelper sharedInstance] transformImageView:self.avatarImage :scrollView];
+    self.avatarImage.layer.transform = [[DetailsHelper sharedInstance] scaleImageViewOnScroll:self.avatarImage :scrollView];
 }
 
 @end

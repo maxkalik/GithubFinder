@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 // Methods
-- (CGAffineTransform)transformImageView:(UIImageView *)imageView :(UIScrollView *)scrollView;
+- (CATransform3D)scaleImageViewOnScroll:(UIImageView *)imageView :(UIScrollView *)scrollView;
 - (NSArray *)prepareLabelTextFromUserData:(User *)user :(NSString *)labelGroup;
 - (NSArray *)prepareLabelsContentWithTextArray:(NSArray<NSString *> *)text andLabels:(NSArray<UILabel *> *)labels;
 
