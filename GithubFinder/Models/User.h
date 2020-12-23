@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *publicRepos;
 @property (nonatomic, strong) NSNumber *publicGists;
 
-@property (nonatomic, strong) NSDate *createdAt;
+@property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) NSURL *avatarUrl;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;

@@ -49,7 +49,6 @@
 
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
-    NSLog(@"dismissKeyboard");
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
@@ -82,13 +81,10 @@
 
 - (void)searchForKeyword:(NSTimer *)timer {
     NSString *keyword = timer.userInfo;
-    NSLog(@"%@", keyword);
-    
     if (keyword.length > 0) {
         [[HTTPService sharedInstance] fetchUsersByName:keyword :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
             if (dataDict) {
                 NSNumber *totalCount = [dataDict objectForKey:@"total_count"];
-                NSLog(@"%@", totalCount);
                 if (totalCount > 0) {
                     NSMutableArray *items = [dataDict objectForKey:@"items"];
                     self.users = items;

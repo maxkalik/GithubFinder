@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Methods
 - (CGAffineTransform)transformImageView:(UIImageView *)imageView :(UIScrollView *)scrollView;
+- (NSArray *)prepareLabelTextFromUserData:(User *)user :(NSString *)labelGroup;
+- (NSArray *)prepareLabelsContentWithTextArray:(NSArray<NSString *> *)text andLabels:(NSArray<UILabel *> *)labels;
+// - (NSString *)parseDateString:(NSString *)dateString;
 
 @end
 

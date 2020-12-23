@@ -38,9 +38,14 @@
     [[HTTPService sharedInstance] fetchReposFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         
         User *user = [[User alloc] initWithDictionary:dataDict];
-        NSLog(@"%@", user.bio);
         
         [self.avatarImage loadFromUrl:user.avatarUrl];
+
+        NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
+        });
+
     }];
 }
 
