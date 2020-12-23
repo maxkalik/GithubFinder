@@ -35,13 +35,15 @@
 }
 
 - (void)fetchUsersByName:(NSString  *)userName :(nullable onComplete)completionHandler {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@", URL_BASE, SEARCH, userName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@&page=1&per_page=100", URL_BASE, SEARCH, userName]];
     [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         completionHandler(dataDict, errorMessage);
     }];
 }
 
-- (void)fetchReposFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler {
+// page=3&per_page=100
+
+- (void)fetchUserInfoFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler {
     NSURL *url = [NSURL URLWithString:urlString];
     [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         completionHandler(dataDict, errorMessage);

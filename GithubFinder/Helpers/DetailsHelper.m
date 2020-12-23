@@ -6,12 +6,7 @@
 //
 
 #import "DetailsHelper.h"
-
-@interface DetailsHelper ()
-
-- (NSString *)parseDateString:(NSString *)dateString;
-
-@end
+#import "TypographyHelper.h"
 
 @implementation DetailsHelper
 
@@ -47,8 +42,8 @@
 
 - (NSArray<NSString *> *)prepareLabelTextFromUserData:(User *)user :(NSString *)labelGroup {
     NSDictionary *casesDict = @{
-        @"general": [NSArray arrayWithObjects: user.name, user.login, user.location, [self parseDateString:user.createdAt], nil],
-        @"details": [NSArray arrayWithObjects: user.publicRepos, user.publicGists, user.followers, user.following, nil]
+        @"general": [NSArray arrayWithObjects: user.location, [[TypographyHelper sharedInstance] parseDateString:user.createdAt], user.name, user.login, nil],
+        @"details": [NSArray arrayWithObjects: user.followers, user.following, user.publicRepos, user.publicGists, nil]
     };
     return casesDict[labelGroup];
 }
@@ -61,15 +56,6 @@
         [arrayWithLabels addObject:label];
     }
     return arrayWithLabels;
-}
-
-- (NSString *)parseDateString:(NSString *)dateString {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:SSZ"];
-    NSDate *date = [dateFormatter dateFromString:dateString];
-    [dateFormatter setDateFormat:@"dd/MM/yyyy"];
-
-    return [dateFormatter stringFromDate:date];
 }
 
 @end

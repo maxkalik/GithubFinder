@@ -55,11 +55,6 @@
     self.spinner.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
-// - (void)viewDidAppear:(BOOL)animated {
-//     [super viewDidAppear:animated];
-//
-// }
-
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
 }
@@ -76,8 +71,12 @@
         self.timer = nil;
     }
     
+    if (searchText.length > 0) {
+        [self.spinner startAnimating];
+    }
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchForKeyword:) userInfo:searchText repeats:NO];
-    [self.spinner startAnimating];
+    
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -99,6 +98,7 @@
             if (dataDict) {
                 NSNumber *totalCount = [dataDict safeObjectForKey:@"total_count"];
                 if (totalCount > 0) {
+                    NSLog(@"%@", totalCount);
                     NSMutableArray *items = [dataDict safeObjectForKey:@"items"];
                     self.users = items;
                     

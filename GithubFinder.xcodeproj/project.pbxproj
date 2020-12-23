@@ -22,6 +22,7 @@
 		11D082762590CFD600978954 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11D082742590CFD600978954 /* LaunchScreen.storyboard */; };
 		11D082792590CFD600978954 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082782590CFD600978954 /* main.m */; };
 		11D082832590D17700978954 /* HTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082822590D17700978954 /* HTTPService.m */; };
+		11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6EF2593FBD20090572E /* TypographyHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,8 @@
 		11D082782590CFD600978954 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		11D082812590D17700978954 /* HTTPService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPService.h; sourceTree = "<group>"; };
 		11D082822590D17700978954 /* HTTPService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPService.m; sourceTree = "<group>"; };
+		11DFB6EE2593FBD20090572E /* TypographyHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypographyHelper.h; sourceTree = "<group>"; };
+		11DFB6EF2593FBD20090572E /* TypographyHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TypographyHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 			children = (
 				11062815259291EA00B67046 /* DetailsHelper.h */,
 				11062816259291EA00B67046 /* DetailsHelper.m */,
+				11DFB6EE2593FBD20090572E /* TypographyHelper.h */,
+				11DFB6EF2593FBD20090572E /* TypographyHelper.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */,
 				11062817259291EA00B67046 /* DetailsHelper.m in Sources */,
 				11D0826E2590CFD400978954 /* HomeViewController.m in Sources */,
 				11D082832590D17700978954 /* HTTPService.m in Sources */,
