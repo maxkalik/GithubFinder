@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic, nullable) NSMutableArray *users;
 @property (strong, nonatomic, nullable) NSTimer *timer;
+@property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @end
 
 @implementation HomeViewController
@@ -43,11 +44,21 @@
     toolbar.items = [NSArray arrayWithObject:barButton];
 
     self.searchBar.inputAccessoryView = toolbar;
+    self.searchBar.placeholder = @"Search Github User";
     [self.searchBar setBackgroundImage:[UIImage new]];
     
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
+    
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [self.view addSubview:self.spinner];
+    self.spinner.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
+
+// - (void)viewDidAppear:(BOOL)animated {
+//     [super viewDidAppear:animated];
+//
+// }
 
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
@@ -66,7 +77,7 @@
     }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchForKeyword:) userInfo:searchText repeats:NO];
-    
+    [self.spinner startAnimating];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -92,7 +103,8 @@
                     self.users = items;
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadData];                        
+                        [self.tableView reloadData];
+                        [self.spinner stopAnimating];
                     });
                 }
             } else if (errorMessage) {
