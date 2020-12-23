@@ -6,7 +6,7 @@
 //
 
 #import "DetailsViewController.h"
-#import "UIImageView+category.h"
+#import "UIImageView+Category.h"
 #import "HTTPService.h"
 #import "DetailsHelper.h"
 #import "User.h"
@@ -39,11 +39,19 @@
         
         User *user = [[User alloc] initWithDictionary:dataDict];
         
-        [self.avatarImage loadFromUrl:user.avatarUrl];
+        // [self.avatarImage loadFromUrl:user.avatarUrl];
+        [self.avatarImage loadFromUrl:user.avatarUrl :^{
+            NSLog(@"complete");
+            // loader complete
+        }];
 
         NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
+        NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
+        
         dispatch_async(dispatch_get_main_queue(), ^(void){
+            self.bioLabel.text = user.bio;
             self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
+            self.detailsLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:detailsLabelText andLabels:self.detailsLabels];
         });
 
     }];

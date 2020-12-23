@@ -9,6 +9,7 @@
 #import "HTTPService.h"
 #import "HomeTableViewCell.h"
 #import "DetailsViewController.h"
+#import "NSDictionary+Safety.h"
 
 @interface HomeViewController ()<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -32,6 +33,7 @@
     
     self.title = @"Github Finder";
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeTableViewCell" bundle:nil] forCellReuseIdentifier:@"HomeTableViewCell"];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0);
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     
@@ -84,9 +86,9 @@
     if (keyword.length > 0) {
         [[HTTPService sharedInstance] fetchUsersByName:keyword :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
             if (dataDict) {
-                NSNumber *totalCount = [dataDict objectForKey:@"total_count"];
+                NSNumber *totalCount = [dataDict safeObjectForKey:@"total_count"];
                 if (totalCount > 0) {
-                    NSMutableArray *items = [dataDict objectForKey:@"items"];
+                    NSMutableArray *items = [dataDict safeObjectForKey:@"items"];
                     self.users = items;
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -104,7 +106,7 @@
     if ([segue.identifier isEqualToString:@"showDetails"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailsViewController *detailsVC = segue.destinationViewController;
-        NSString *userUrl = [[self.users objectAtIndex:indexPath.row] objectForKey:@"url"];
+        NSString *userUrl = [[self.users objectAtIndex:indexPath.row] safeObjectForKey:@"url"];
         detailsVC.userUrl = userUrl;
     }
 }

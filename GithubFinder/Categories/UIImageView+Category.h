@@ -7,11 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^complition)(void);
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIImageView (category)
+@interface UIImageView (Category)
 
--(void)loadFromUrl:(NSURL *)url;
+-(void)loadFromUrl:(NSURL *)url: (nullable complition)completionHandler;
 
 @end
 

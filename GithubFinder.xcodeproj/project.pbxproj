@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		11062817259291EA00B67046 /* DetailsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11062816259291EA00B67046 /* DetailsHelper.m */; };
+		1106281C2592CF7200B67046 /* NSDictionary+Safety.m in Sources */ = {isa = PBXBuildFile; fileRef = 1106281B2592CF7200B67046 /* NSDictionary+Safety.m */; };
 		1189630F25914F0A002D2522 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189630E25914F0A002D2522 /* User.m */; };
 		118963162591573C002D2522 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 118963142591573C002D2522 /* HomeTableViewCell.m */; };
 		118963172591573C002D2522 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118963152591573C002D2522 /* HomeTableViewCell.xib */; };
 		1189632425922BBD002D2522 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189632325922BBD002D2522 /* DetailsViewController.m */; };
-		11C837E72592899F00268BDD /* UIImageView+category.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C837E62592899F00268BDD /* UIImageView+category.m */; };
+		11C837E72592899F00268BDD /* UIImageView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C837E62592899F00268BDD /* UIImageView+Category.m */; };
 		11D082682590CFD400978954 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082672590CFD400978954 /* AppDelegate.m */; };
 		11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826A2590CFD400978954 /* SceneDelegate.m */; };
 		11D0826E2590CFD400978954 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826D2590CFD400978954 /* HomeViewController.m */; };
@@ -26,6 +27,8 @@
 /* Begin PBXFileReference section */
 		11062815259291EA00B67046 /* DetailsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsHelper.h; sourceTree = "<group>"; };
 		11062816259291EA00B67046 /* DetailsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsHelper.m; sourceTree = "<group>"; };
+		1106281A2592CF7200B67046 /* NSDictionary+Safety.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Safety.h"; sourceTree = "<group>"; };
+		1106281B2592CF7200B67046 /* NSDictionary+Safety.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Safety.m"; sourceTree = "<group>"; };
 		1189630D25914F0A002D2522 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		1189630E25914F0A002D2522 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		118963132591573C002D2522 /* HomeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewCell.h; sourceTree = "<group>"; };
@@ -33,8 +36,8 @@
 		118963152591573C002D2522 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
 		1189632225922BBD002D2522 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		1189632325922BBD002D2522 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
-		11C837E52592899F00268BDD /* UIImageView+category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+category.h"; sourceTree = "<group>"; };
-		11C837E62592899F00268BDD /* UIImageView+category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+category.m"; sourceTree = "<group>"; };
+		11C837E52592899F00268BDD /* UIImageView+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Category.h"; sourceTree = "<group>"; };
+		11C837E62592899F00268BDD /* UIImageView+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Category.m"; sourceTree = "<group>"; };
 		11D082632590CFD400978954 /* GithubFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D082662590CFD400978954 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11D082672590CFD400978954 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -65,8 +68,10 @@
 		1106281025928DDE00B67046 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				11C837E52592899F00268BDD /* UIImageView+category.h */,
-				11C837E62592899F00268BDD /* UIImageView+category.m */,
+				11C837E52592899F00268BDD /* UIImageView+Category.h */,
+				11C837E62592899F00268BDD /* UIImageView+Category.m */,
+				1106281A2592CF7200B67046 /* NSDictionary+Safety.h */,
+				1106281B2592CF7200B67046 /* NSDictionary+Safety.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -240,8 +245,9 @@
 				11D082832590D17700978954 /* HTTPService.m in Sources */,
 				1189630F25914F0A002D2522 /* User.m in Sources */,
 				11D082682590CFD400978954 /* AppDelegate.m in Sources */,
+				1106281C2592CF7200B67046 /* NSDictionary+Safety.m in Sources */,
 				118963162591573C002D2522 /* HomeTableViewCell.m in Sources */,
-				11C837E72592899F00268BDD /* UIImageView+category.m in Sources */,
+				11C837E72592899F00268BDD /* UIImageView+Category.m in Sources */,
 				11D082792590CFD600978954 /* main.m in Sources */,
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
 				1189632425922BBD002D2522 /* DetailsViewController.m in Sources */,

@@ -41,7 +41,7 @@
 - (NSArray<NSString *> *)prepareLabelTextFromUserData:(User *)user :(NSString *)labelGroup {
     NSDictionary *casesDict = @{
         @"general": [NSArray arrayWithObjects: user.name, user.login, user.location, [self parseDateString:user.createdAt], nil],
-        @"details": [NSArray arrayWithObjects: @"apple", @"peach", @"banana", nil]
+        @"details": [NSArray arrayWithObjects: user.publicRepos, user.publicGists, user.followers, user.following, nil]
     };
     return casesDict[labelGroup];
 }

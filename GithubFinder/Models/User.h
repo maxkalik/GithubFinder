@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *reposUrl;
 @property (nonatomic, strong) NSString *login;
 
-@property (nonatomic, strong) NSNumber *followers;
-@property (nonatomic, strong) NSNumber *following;
-@property (nonatomic, strong) NSNumber *publicRepos;
-@property (nonatomic, strong) NSNumber *publicGists;
+@property (nonatomic, strong) NSString *followers;
+@property (nonatomic, strong) NSString *following;
+@property (nonatomic, strong) NSString *publicRepos;
+@property (nonatomic, strong) NSString *publicGists;
 
 @property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) NSURL *avatarUrl;

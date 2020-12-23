@@ -8,25 +8,38 @@
 #import "HomeTableViewCell.h"
 #import "HTTPService.h"
 #import "User.h"
-#import "UIImageView+category.h"
+#import "UIImageView+Category.h"
+#import "NSDictionary+Safety.h"
 
 @interface HomeTableViewCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImgView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
 
 @implementation HomeTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.avatarImgView.hidden = YES;
+    [self.activityIndicator startAnimating];
+}
+
 - (void)configureWithUserResponse:(NSDictionary *)userResponse {
-    NSString *avatarUrlString = [userResponse objectForKey:@"avatar_url"];
-    NSString *login = [userResponse objectForKey:@"login"];
+    NSString *avatarUrlString = [userResponse safeObjectForKey:@"avatar_url"];
+    NSString *login = [userResponse safeObjectForKey:@"login"];
     NSURL *avatarUrl = [NSURL URLWithString:avatarUrlString];
     
-    [self.avatarImgView loadFromUrl:avatarUrl];
+    // [self.avatarImgView loadFromUrl:avatarUrl];
+    [self.avatarImgView loadFromUrl:avatarUrl :^{
+        self.avatarImgView.hidden = NO;
+        [self.activityIndicator stopAnimating];
+    }];
     [self nameLabel].text = login;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
