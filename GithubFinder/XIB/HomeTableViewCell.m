@@ -24,7 +24,7 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.avatarImgView.image = [UIImage imageNamed:@""];
+    [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.avatarImgView.image]];
 }
 
 - (void)awakeFromNib {
