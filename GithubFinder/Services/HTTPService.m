@@ -35,7 +35,14 @@
 }
 
 - (void)fetchUsersByName:(NSString  *)userName :(nullable onComplete)completionHandler {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@&page=1&per_page=100", URL_BASE, SEARCH, userName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@", URL_BASE, SEARCH, userName]];
+    [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+        completionHandler(dataDict, errorMessage);
+    }];
+}
+
+- (void)fetchUsersByName:(NSString  *)userName fromPage:(int)page withAmount:(int)amount :(nullable onComplete)completionHandler {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%s%s?q=%@&page=%li&per_page=%li", URL_BASE, SEARCH, userName, (long)page, (long)amount]];
     [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         completionHandler(dataDict, errorMessage);
     }];
@@ -43,8 +50,7 @@
 
 // page=3&per_page=100
 
-- (void)fetchUserInfoFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler {
-    NSURL *url = [NSURL URLWithString:urlString];
+- (void)fetchUserInfoFromUrl:(NSURL *)url :(nullable onComplete)completionHandler {
     [self fetchDataFromUrl:url :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         completionHandler(dataDict, errorMessage);
     }];

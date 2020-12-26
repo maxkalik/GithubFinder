@@ -23,6 +23,7 @@
 		11D082792590CFD600978954 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082782590CFD600978954 /* main.m */; };
 		11D082832590D17700978954 /* HTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082822590D17700978954 /* HTTPService.m */; };
 		11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6EF2593FBD20090572E /* TypographyHelper.m */; };
+		11DFB6F825943B830090572E /* UserResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6F725943B830090572E /* UserResponse.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,8 @@
 		11D082822590D17700978954 /* HTTPService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPService.m; sourceTree = "<group>"; };
 		11DFB6EE2593FBD20090572E /* TypographyHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TypographyHelper.h; sourceTree = "<group>"; };
 		11DFB6EF2593FBD20090572E /* TypographyHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TypographyHelper.m; sourceTree = "<group>"; };
+		11DFB6F625943B830090572E /* UserResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserResponse.h; sourceTree = "<group>"; };
+		11DFB6F725943B830090572E /* UserResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserResponse.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 			children = (
 				1189630D25914F0A002D2522 /* User.h */,
 				1189630E25914F0A002D2522 /* User.m */,
+				11DFB6F625943B830090572E /* UserResponse.h */,
+				11DFB6F725943B830090572E /* UserResponse.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				11C837E72592899F00268BDD /* UIImageView+Category.m in Sources */,
 				11D082792590CFD600978954 /* main.m in Sources */,
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
+				11DFB6F825943B830090572E /* UserResponse.m in Sources */,
 				1189632425922BBD002D2522 /* DetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

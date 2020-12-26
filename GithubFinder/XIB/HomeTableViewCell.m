@@ -10,6 +10,7 @@
 #import "User.h"
 #import "UIImageView+Category.h"
 #import "NSDictionary+Safety.h"
+#import "UserResponse.h"
 
 @interface HomeTableViewCell ()
 
@@ -24,24 +25,22 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.avatarImgView.image]];
+    // [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.avatarImgView.image]];
+    self.avatarImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.avatarImgView.image]];
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    // [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.avatarImgView.image]];
     self.avatarImgView.hidden = YES;
     [self.activityIndicator startAnimating];
     self.avatarImgView.layer.cornerRadius = 28;
     self.avatarImgView.layer.masksToBounds = YES;
 }
 
-- (void)configureWithUserResponse:(NSDictionary *)userResponse {
-    NSString *avatarUrlString = [userResponse safeObjectForKey:@"avatar_url"];
-    NSString *login = [userResponse safeObjectForKey:@"login"];
-    NSURL *avatarUrl = [NSURL URLWithString:avatarUrlString];
-    
-    [self.avatarImgView loadFromUrl:avatarUrl];
-    [self nameLabel].text = login;
+- (void)configureWithUserResponse:(UserResponse *)userResponse {
+    [self.avatarImgView loadFromUrl:userResponse.avatarUrl];
+    [self nameLabel].text = userResponse.login;
     
     self.avatarImgView.hidden = NO;
     [self.activityIndicator stopAnimating];

@@ -26,17 +26,14 @@
 @implementation DetailsViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    // self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
-    
+    [super viewDidLoad];    
     self.scrollView.delegate = self;
     if (@available(iOS 11.0, *)) {
         self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
             // Fallback on earlier versions
     }
+    NSLog(@"URL of user: %@", self.userUrl);
     
     [[HTTPService sharedInstance] fetchUserInfoFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         

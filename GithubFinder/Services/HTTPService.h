@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 - (void)fetchUsersByName:(NSString  *)userName :(nullable onComplete)completionHandler;
-- (void)fetchUserInfoFromUrl:(NSString *)urlString :(nullable onComplete)completionHandler;
+- (void)fetchUsersByName:(NSString  *)userName fromPage:(int)page withAmount:(int)amount :(nullable onComplete)completionHandler;
+- (void)fetchUserInfoFromUrl:(NSURL *)url :(nullable onComplete)completionHandler;
 
 @end
 

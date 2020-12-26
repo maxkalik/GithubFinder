@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailsViewController : UIViewController
 
-@property (nonatomic, strong) NSString *userUrl;
+@property (nonatomic, strong) NSURL *userUrl;
 
 @end
 
