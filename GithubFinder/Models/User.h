@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) NSURL *avatarUrl;
+@property (nonatomic, strong) NSURL *htmlUrl;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 

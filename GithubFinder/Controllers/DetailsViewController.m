@@ -22,6 +22,8 @@
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *generalLabels;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *detailsLabels;
 
+@property (strong, nonatomic) NSURL *userHtmlUrl;
+
 @end
 
 @implementation DetailsViewController
@@ -36,6 +38,7 @@
     [[HTTPService sharedInstance] fetchUserInfoFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         if (dataDict) {
             User *user = [[User alloc] initWithDictionary:dataDict];
+            self.userHtmlUrl = user.htmlUrl;
             [self.avatarImage loadFromUrl:user.avatarUrl];
             
             NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
@@ -57,8 +60,7 @@
 }
 
 - (IBAction)profileButtonTapped:(UIButton *)sender {
-    NSLog(@"tapped");
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://www.github.com"]];
+    [[UIApplication sharedApplication]openURL:self.userHtmlUrl];
 }
 
 @end

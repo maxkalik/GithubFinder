@@ -25,6 +25,7 @@
         
         _createdAt = [dict safeObjectForKey:@"created_at"];
         _avatarUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict safeObjectForKey:@"avatar_url"]]];
+        _htmlUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict safeObjectForKey:@"html_url"]]];
         _reposUrl = [dict safeObjectForKey:@"repos_url"];
     }
     return self;

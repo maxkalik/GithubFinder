@@ -7,7 +7,8 @@
 
 #import "HomeViewController.h"
 #import "HTTPService.h"
-#import "HomeTableViewCell.h"
+#import "HomeTableViewDataSource.h"
+
 #import "DetailsViewController.h"
 #import "NSDictionary+Safety.h"
 #import "UserResponse.h"
@@ -15,7 +16,7 @@
 
 #define ITEMS_PER_PAGE 50
 
-@interface HomeViewController ()<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface HomeViewController ()<UISearchBarDelegate, HomeTableViewDataSourceDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -31,6 +32,8 @@
 @property (strong, nonatomic, nullable) NSNumber *totalDataItems;
 @property (nonatomic, assign) int lastItems;
 
+@property (nonatomic, strong, nullable) HomeTableViewDataSource *tableViewDataSource;
+
 - (void)appendDataFromResponse:(NSDictionary *)dataDict;
 
 @end
@@ -42,7 +45,11 @@
     [super viewDidLoad];
     self.title = @"Github Finder";
     
-    [self setupTableView];
+    // [self setupTableView];
+    
+    self.tableViewDataSource = [[HomeTableViewDataSource alloc] initWithTableView:self.tableView andData:self.users];
+    self.tableViewDataSource.delegate = self;
+    
     [self setupSearchBar];
     [self setupSpinner];
     
@@ -50,14 +57,6 @@
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     self.users = [[NSMutableArray alloc] init];
-}
-
-- (void)setupTableView {
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self tableView].separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerNib:[UINib nibWithNibName:@"HomeTableViewCell" bundle:nil] forCellReuseIdentifier:@"HomeTableViewCell"];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0);
 }
 
 - (void)setupSpinner {
@@ -86,7 +85,8 @@
     
     if (!searchText.length) {
         self.users = nil;
-        [self.tableView reloadData];
+        // [self.tableView reloadData];
+        [self.tableViewDataSource reloadData];
     }
     
     if (self.timer != nil) {
@@ -127,19 +127,11 @@
 - (void)searchForKeyword:(NSTimer *)timer {
     NSString *keyword = timer.userInfo;
     if (keyword.length > 0) {
-        self.isFetching = YES;
+        [self startLoading];
         [[HTTPService sharedInstance] fetchUsersByName:keyword fromPage:1 withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
             self.searchKeyword = keyword;
-            self.currentPageNumber = 1;
             if (dataDict) {
-                NSNumber *totalCount = [dataDict safeObjectForKey:@"total_count"];
-                self.totalDataItems = totalCount;
-                if (totalCount > 0) {
-                    self.pages = ceil((float)[totalCount intValue] / (float)ITEMS_PER_PAGE);
-                    if (self.users.count > 0) {  [self.users removeAllObjects]; }
-                    [self appendDataFromResponse:dataDict];
-                    [self updateTableView];
-                }
+                [self initialSearchDataFromDict:dataDict];
             } else if (errorMessage) {
                 [self stopLoading];
                 [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
@@ -148,17 +140,27 @@
     }
 }
 
+- (void)initialSearchDataFromDict: (NSDictionary *)dict {
+    self.currentPageNumber = 1;
+    NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
+    self.totalDataItems = totalCount;
+    if (totalCount > 0) {
+        self.pages = ceil((float)[totalCount intValue] / (float)ITEMS_PER_PAGE);
+        if (self.users.count > 0) {  [self.users removeAllObjects]; }
+        [self appendDataFromResponse:dict];
+        [self updateTableView];
+    }
+}
 
 - (void)updateTableView {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
+        [self.tableViewDataSource updateTableViewData:self.users];
         [self stopLoading];
     });
 }
 
 - (void)appendDataFromResponse:(NSDictionary *)dataDict {
     NSMutableArray *items = [dataDict safeObjectForKey:@"items"];
-    NSLog(@"%@", items);
     for (NSDictionary *item in items) {
         UserResponse *userResponse = [[UserResponse alloc] initWithDictionary:item];
         if (userResponse) {
@@ -167,58 +169,44 @@
     }
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showDetails"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        DetailsViewController *detailsVC = segue.destinationViewController;
-        NSURL *userUrl = [self.users objectAtIndex:indexPath.row].url;
-        detailsVC.userUrl = userUrl;
+- (void)repeatedSearchDataFromDict:(NSDictionary *)dict {
+    NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
+    if (totalCount > 0) {
+        [self appendDataFromResponse:dict];
+        self.currentPageNumber++;
+        [self updateTableView];
     }
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    HomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeTableViewCell"];
-    [cell configureWithUserResponse:[self.users objectAtIndex:indexPath.row]];
-    return cell;
-}
-
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.users count];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"showDetails" sender:self];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 84.0;
-}
-
-- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat actualPosition = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height - (self.view.frame.size.height - self.searchBar.frame.size.height);
-    if (actualPosition >= contentHeight && contentHeight > 0 && !self.isFetching) {
-        [self startLoading];
-        if (self.pages >= self.currentPageNumber) {
-            NSLog(@"fetching..., page: %d", self.currentPageNumber);
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [[HTTPService sharedInstance] fetchUsersByName:self.searchKeyword fromPage:self.currentPageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-                    if (dataDict) {
-                        NSNumber *totalCount = [dataDict safeObjectForKey:@"total_count"];
-                        if (totalCount > 0) {
-                            [self appendDataFromResponse:dataDict];
-                            NSLog(@"%lu", (unsigned long)self.users.count);
-                            self.currentPageNumber++;
-                            [self updateTableView];
-                        }
-                    } else if (errorMessage) {
-                        [self stopLoading];
-                        [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
-                    }
-                }];
-            });
-        }
+- (void)fetchOnScrollDidEnd {
+    if (self.pages >= self.currentPageNumber) {
+        // NSLog(@"fetching..., page: %d", self.currentPageNumber);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[HTTPService sharedInstance] fetchUsersByName:self.searchKeyword fromPage:self.currentPageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+                if (dataDict) {
+                    [self repeatedSearchDataFromDict:dataDict];
+                } else if (errorMessage) {
+                    [self stopLoading];
+                    [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
+                }
+            }];
+        });
     }
+}
+
+// MARK: - HomeTableViewDataSourceDelegate
+
+- (void)rowDidSelectWithUrl:(nonnull NSURL *)url {
+    NSLog(@"%@", url);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+    vc.userUrl = url;
+    [[self navigationController] pushViewController:vc animated:YES];
+}
+
+- (void)scrollDidEnd {
+    [self startLoading];
+    [self fetchOnScrollDidEnd];
 }
 
 @end

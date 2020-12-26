@@ -25,6 +25,7 @@
 		11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6EF2593FBD20090572E /* TypographyHelper.m */; };
 		11DFB6F825943B830090572E /* UserResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6F725943B830090572E /* UserResponse.m */; };
 		11DFB6FC25979C760090572E /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6FB25979C750090572E /* UIViewController+Alert.m */; };
+		11DFB7052597D5680090572E /* HomeTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB7042597D5680090572E /* HomeTableViewDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,8 @@
 		11DFB6F725943B830090572E /* UserResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserResponse.m; sourceTree = "<group>"; };
 		11DFB6FA25979C750090572E /* UIViewController+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
 		11DFB6FB25979C750090572E /* UIViewController+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
+		11DFB7032597D5680090572E /* HomeTableViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTableViewDataSource.h; sourceTree = "<group>"; };
+		11DFB7042597D5680090572E /* HomeTableViewDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTableViewDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				11062816259291EA00B67046 /* DetailsHelper.m */,
 				11DFB6EE2593FBD20090572E /* TypographyHelper.h */,
 				11DFB6EF2593FBD20090572E /* TypographyHelper.m */,
+				11DFB7032597D5680090572E /* HomeTableViewDataSource.h */,
+				11DFB7042597D5680090572E /* HomeTableViewDataSource.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 			files = (
 				11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */,
 				11062817259291EA00B67046 /* DetailsHelper.m in Sources */,
+				11DFB7052597D5680090572E /* HomeTableViewDataSource.m in Sources */,
 				11D0826E2590CFD400978954 /* HomeViewController.m in Sources */,
 				11D082832590D17700978954 /* HTTPService.m in Sources */,
 				1189630F25914F0A002D2522 /* User.m in Sources */,
