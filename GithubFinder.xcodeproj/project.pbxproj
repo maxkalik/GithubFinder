@@ -24,6 +24,7 @@
 		11D082832590D17700978954 /* HTTPService.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082822590D17700978954 /* HTTPService.m */; };
 		11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6EF2593FBD20090572E /* TypographyHelper.m */; };
 		11DFB6F825943B830090572E /* UserResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6F725943B830090572E /* UserResponse.m */; };
+		11DFB6FC25979C760090572E /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DFB6FB25979C750090572E /* UIViewController+Alert.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,8 @@
 		11DFB6EF2593FBD20090572E /* TypographyHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TypographyHelper.m; sourceTree = "<group>"; };
 		11DFB6F625943B830090572E /* UserResponse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserResponse.h; sourceTree = "<group>"; };
 		11DFB6F725943B830090572E /* UserResponse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserResponse.m; sourceTree = "<group>"; };
+		11DFB6FA25979C750090572E /* UIViewController+Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
+		11DFB6FB25979C750090572E /* UIViewController+Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 			children = (
 				11C837E52592899F00268BDD /* UIImageView+Category.h */,
 				11C837E62592899F00268BDD /* UIImageView+Category.m */,
+				11DFB6FA25979C750090572E /* UIViewController+Alert.h */,
+				11DFB6FB25979C750090572E /* UIViewController+Alert.m */,
 				1106281A2592CF7200B67046 /* NSDictionary+Safety.h */,
 				1106281B2592CF7200B67046 /* NSDictionary+Safety.m */,
 			);
@@ -263,6 +268,7 @@
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
 				11DFB6F825943B830090572E /* UserResponse.m in Sources */,
 				1189632425922BBD002D2522 /* DetailsViewController.m in Sources */,
+				11DFB6FC25979C760090572E /* UIViewController+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

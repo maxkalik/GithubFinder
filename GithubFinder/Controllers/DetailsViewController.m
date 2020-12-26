@@ -11,6 +11,7 @@
 #import "DetailsHelper.h"
 #import "TypographyHelper.h"
 #import "User.h"
+#import "UIViewController+Alert.h"
 
 @interface DetailsViewController ()<UIScrollViewDelegate>
 
@@ -30,24 +31,24 @@
     self.scrollView.delegate = self;
     if (@available(iOS 11.0, *)) {
         self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-            // Fallback on earlier versions
     }
-    NSLog(@"URL of user: %@", self.userUrl);
-    
-    [[HTTPService sharedInstance] fetchUserInfoFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-        
-        User *user = [[User alloc] initWithDictionary:dataDict];
-        [self.avatarImage loadFromUrl:user.avatarUrl];
 
-        NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
-        NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            if (user.bio) { self.bioLabel.attributedText = [[TypographyHelper sharedInstance] makeLineHeight:4 forString:user.bio]; }
-            self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
-            self.detailsLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:detailsLabelText andLabels:self.detailsLabels];
-        });
+    [[HTTPService sharedInstance] fetchUserInfoFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+        if (dataDict) {
+            User *user = [[User alloc] initWithDictionary:dataDict];
+            [self.avatarImage loadFromUrl:user.avatarUrl];
+            
+            NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
+            NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                if (user.bio) { self.bioLabel.attributedText = [[TypographyHelper sharedInstance] makeLineHeight:4 forString:user.bio]; }
+                self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
+                self.detailsLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:detailsLabelText andLabels:self.detailsLabels];
+            });
+        } else if (errorMessage) {
+            [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
+        }
     }];
 }
 

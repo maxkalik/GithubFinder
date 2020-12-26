@@ -11,6 +11,7 @@
 #import "DetailsViewController.h"
 #import "NSDictionary+Safety.h"
 #import "UserResponse.h"
+#import "UIViewController+Alert.h"
 
 #define ITEMS_PER_PAGE 50
 
@@ -140,8 +141,8 @@
                     [self updateTableView];
                 }
             } else if (errorMessage) {
-                    // Display alert
-                self.isFetching = NO;
+                [self stopLoading];
+                [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
             }
         }];
     }
@@ -170,7 +171,6 @@
     if ([segue.identifier isEqualToString:@"showDetails"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailsViewController *detailsVC = segue.destinationViewController;
-        // NSString *userUrl = [[self.users objectAtIndex:indexPath.row] safeObjectForKey:@"url"];
         NSURL *userUrl = [self.users objectAtIndex:indexPath.row].url;
         detailsVC.userUrl = userUrl;
     }
@@ -212,7 +212,8 @@
                             [self updateTableView];
                         }
                     } else if (errorMessage) {
-                            // Display alert
+                        [self stopLoading];
+                        [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
                     }
                 }];
             });
