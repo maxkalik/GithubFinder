@@ -1,6 +1,6 @@
 # GitHub Finder App
 
-![WeahterLogger App Icon](octocat.png)
+![WeahterLogger App Icon](Octocat.png)
 
 ## Main Objective
 
