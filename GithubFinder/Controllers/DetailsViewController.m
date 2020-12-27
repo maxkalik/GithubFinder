@@ -12,6 +12,7 @@
 #import "TypographyHelper.h"
 #import "User.h"
 #import "UIViewController+Alert.h"
+#import "UIViewController+NavigationBar.h"
 
 @interface DetailsViewController ()<UIScrollViewDelegate>
 
@@ -29,30 +30,40 @@
 @implementation DetailsViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];    
+    [super viewDidLoad];
+    
     self.scrollView.delegate = self;
     if (@available(iOS 11.0, *)) {
         self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
+    
+    [self makeNavigationBarTransparent];
+    [self fetchData];
+}
 
+- (void)fetchData {
     [[HTTPService sharedInstance] fetchUserInfoFromUrl:self.userUrl :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         if (dataDict) {
-            User *user = [[User alloc] initWithDictionary:dataDict];
-            self.userHtmlUrl = user.htmlUrl;
-            [self.avatarImage loadFromUrl:user.avatarUrl];
-            
-            NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
-            NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
-            
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                if (user.bio) { self.bioLabel.attributedText = [[TypographyHelper sharedInstance] makeLineHeight:4 forString:user.bio]; }
-                self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
-                self.detailsLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:detailsLabelText andLabels:self.detailsLabels];
-            });
+            [self adjustContentFrom:dataDict];
         } else if (errorMessage) {
             [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
         }
     }];
+}
+
+- (void)adjustContentFrom:(NSDictionary *)dict {
+    User *user = [[User alloc] initWithDictionary:dict];
+    self.userHtmlUrl = user.htmlUrl;
+    [self.avatarImage loadFromUrl:user.avatarUrl];
+    
+    NSArray *generalLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"general"];
+    NSArray *detailsLabelText = [[DetailsHelper sharedInstance] prepareLabelTextFromUserData:user :@"details"];
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        if (user.bio) { self.bioLabel.attributedText = [[TypographyHelper sharedInstance] makeLineHeight:4 forString:user.bio]; }
+        self.generalLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:generalLabelText andLabels:self.generalLabels];
+        self.detailsLabels = [[DetailsHelper sharedInstance] prepareLabelsContentWithTextArray:detailsLabelText andLabels:self.detailsLabels];
+    });
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

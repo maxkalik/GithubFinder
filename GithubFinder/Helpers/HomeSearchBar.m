@@ -19,7 +19,6 @@
 
 - (id)initWithSearchBar:(UISearchBar *)searchBar {
     self = [super init];
-    NSLog(@"search bar initiated");
     if (self) {
         _searchBar = searchBar;
         _searchBar.delegate = self;

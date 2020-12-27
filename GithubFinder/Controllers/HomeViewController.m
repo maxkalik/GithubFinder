@@ -20,21 +20,18 @@
 #define ITEMS_PER_PAGE 50
 
 @interface HomeViewController ()<HomeTableViewDataSourceDelegate, HomeSearchBarDelegate>
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (strong, nonatomic, nullable) NSMutableArray<UserResponse *> *users;
-@property (strong, nonatomic) Spinner *spinner;
-
-@property (strong, nonatomic) NSString *searchKeyword;
-
-@property (nonatomic, assign) int currentPageNumber;
+@property (nonatomic, strong, nullable) NSMutableArray<UserResponse *> *users;
+@property (nonatomic, strong) Spinner *spinner;
+@property (nonatomic, strong) NSString *searchKeyword;
+@property (nonatomic, assign) int nextPageNumber;
 @property (nonatomic, assign) int pages;
 @property (nonatomic, assign) BOOL isFetching;
-@property (strong, nonatomic, nullable) NSNumber *totalDataItems;
 @property (nonatomic, assign) int lastItems;
-
+@property (nonatomic, strong, nullable) NSNumber *totalDataItems;
 @property (nonatomic, strong, nullable) HomeTableViewDataSource *tableViewDataSource;
 @property (nonatomic, strong, nullable) HomeSearchBar *homeSearchBar;
 
@@ -78,7 +75,7 @@
 }
 
 - (void)initialSearchDataFromDict: (NSDictionary *)dict {
-    self.currentPageNumber = 2;
+    self.nextPageNumber = 2;
     NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
     self.totalDataItems = totalCount;
     if (totalCount > 0) {
@@ -110,20 +107,19 @@
     NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
     if (totalCount > 0) {
         [self appendDataFromResponse:dict];
-        self.currentPageNumber++;
+        self.nextPageNumber++;
         [self updateTableView];
         
     }
 }
 
 - (void)fetchOnScrollDidEnd {
-    if (self.pages >= self.currentPageNumber) {
-        [self fetchDataWithKeyword:self.searchKeyword onPageNumber:self.currentPageNumber];
+    if (self.pages >= self.nextPageNumber) {
+        [self fetchDataWithKeyword:self.searchKeyword onPageNumber:self.nextPageNumber];
     }
 }
 
 - (void)fetchDataWithKeyword:(NSString *)keyword onPageNumber:(int)pageNumber {
-    NSLog(@"keyword: %@", keyword);
     [[HTTPService sharedInstance] fetchUsersByName:keyword fromPage:pageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         if (dataDict) {
             if (pageNumber > 1) {

@@ -15,6 +15,7 @@
 		1189632425922BBD002D2522 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189632325922BBD002D2522 /* DetailsViewController.m */; };
 		11A0C6992598072500C65F03 /* HomeSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A0C6982598072500C65F03 /* HomeSearchBar.m */; };
 		11A0C69E259880B500C65F03 /* Spinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A0C69D259880B500C65F03 /* Spinner.m */; };
+		11A0C6A32598A42000C65F03 /* UIViewController+NavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A0C6A22598A42000C65F03 /* UIViewController+NavigationBar.m */; };
 		11C837E72592899F00268BDD /* UIImageView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C837E62592899F00268BDD /* UIImageView+Category.m */; };
 		11D082682590CFD400978954 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082672590CFD400978954 /* AppDelegate.m */; };
 		11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826A2590CFD400978954 /* SceneDelegate.m */; };
@@ -46,6 +47,8 @@
 		11A0C6982598072500C65F03 /* HomeSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSearchBar.m; sourceTree = "<group>"; };
 		11A0C69C259880B500C65F03 /* Spinner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Spinner.h; sourceTree = "<group>"; };
 		11A0C69D259880B500C65F03 /* Spinner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Spinner.m; sourceTree = "<group>"; };
+		11A0C6A12598A42000C65F03 /* UIViewController+NavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+NavigationBar.h"; sourceTree = "<group>"; };
+		11A0C6A22598A42000C65F03 /* UIViewController+NavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+NavigationBar.m"; sourceTree = "<group>"; };
 		11C837E52592899F00268BDD /* UIImageView+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Category.h"; sourceTree = "<group>"; };
 		11C837E62592899F00268BDD /* UIImageView+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Category.m"; sourceTree = "<group>"; };
 		11D082632590CFD400978954 /* GithubFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +95,8 @@
 				11DFB6FB25979C750090572E /* UIViewController+Alert.m */,
 				1106281A2592CF7200B67046 /* NSDictionary+Safety.h */,
 				1106281B2592CF7200B67046 /* NSDictionary+Safety.m */,
+				11A0C6A12598A42000C65F03 /* UIViewController+NavigationBar.h */,
+				11A0C6A22598A42000C65F03 /* UIViewController+NavigationBar.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 			files = (
 				11DFB6F02593FBD20090572E /* TypographyHelper.m in Sources */,
 				11062817259291EA00B67046 /* DetailsHelper.m in Sources */,
+				11A0C6A32598A42000C65F03 /* UIViewController+NavigationBar.m in Sources */,
 				11DFB7052597D5680090572E /* HomeTableViewDataSource.m in Sources */,
 				11D0826E2590CFD400978954 /* HomeViewController.m in Sources */,
 				11D082832590D17700978954 /* HTTPService.m in Sources */,
