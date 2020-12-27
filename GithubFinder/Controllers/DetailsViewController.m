@@ -29,16 +29,32 @@
 
 @implementation DetailsViewController
 
+- (void)loadView
+{
+    [super loadView];
+    UIButton *backButton = [[UIButton alloc] initWithFrame: CGRectMake(0, 0, 32, 20)];
+    [backButton setImage:[UIImage imageNamed:@"back.png"]  forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(popVC) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = barButtonItem;
+    
+}
+
+- (void) popVC{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.scrollView.delegate = self;
-    if (@available(iOS 11.0, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-    
     [self makeNavigationBarTransparent];
     [self fetchData];
+}
+
+- (void)setScrollView:(UIScrollView *)scrollView {
+    scrollView.delegate = self;
+    if (@available(iOS 11.0, *)) {
+        scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
 }
 
 - (void)fetchData {

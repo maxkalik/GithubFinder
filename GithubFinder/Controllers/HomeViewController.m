@@ -27,10 +27,9 @@
 @property (nonatomic, strong, nullable) NSMutableArray<UserResponse *> *users;
 @property (nonatomic, strong) Spinner *spinner;
 @property (nonatomic, strong) NSString *searchKeyword;
-@property (nonatomic, assign) int nextPageNumber;
+@property (nonatomic, assign) int currentPageNumber;
 @property (nonatomic, assign) int pages;
 @property (nonatomic, assign) BOOL isFetching;
-@property (nonatomic, assign) int lastItems;
 @property (nonatomic, strong, nullable) NSNumber *totalDataItems;
 @property (nonatomic, strong, nullable) HomeTableViewDataSource *tableViewDataSource;
 @property (nonatomic, strong, nullable) HomeSearchBar *homeSearchBar;
@@ -75,11 +74,12 @@
 }
 
 - (void)initialSearchDataFromDict: (NSDictionary *)dict {
-    self.nextPageNumber = 2;
+    self.currentPageNumber = 1;
     NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
     self.totalDataItems = totalCount;
     if (totalCount > 0) {
         self.pages = ceil((float)[totalCount intValue] / (float)ITEMS_PER_PAGE);
+        NSLog(@"INITIAL: %d, %d", self.pages, self.currentPageNumber);
         if (self.users.count > 0) {  [self.users removeAllObjects]; }
         [self appendDataFromResponse:dict];
         [self updateTableView];
@@ -107,22 +107,25 @@
     NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
     if (totalCount > 0) {
         [self appendDataFromResponse:dict];
-        self.nextPageNumber++;
+        self.currentPageNumber++;
         [self updateTableView];
-        
     }
 }
 
 - (void)fetchOnScrollDidEnd {
-    if (self.pages >= self.nextPageNumber) {
-        [self fetchDataWithKeyword:self.searchKeyword onPageNumber:self.nextPageNumber];
+    self.currentPageNumber++;
+    if (self.pages >= self.currentPageNumber) {
+        [self fetchDataWithKeyword:self.searchKeyword onPageNumber:1 repeated:YES];
+    } else {
+        self.isFetching = NO;
     }
 }
 
-- (void)fetchDataWithKeyword:(NSString *)keyword onPageNumber:(int)pageNumber {
+- (void)fetchDataWithKeyword:(NSString *)keyword onPageNumber:(int)pageNumber repeated:(BOOL)isRepeated {
+    
     [[HTTPService sharedInstance] fetchUsersByName:keyword fromPage:pageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
         if (dataDict) {
-            if (pageNumber > 1) {
+            if (isRepeated) {
                 [self repeatedSearchDataFromDict:dataDict];
             } else {
                 self.searchKeyword = keyword;
@@ -142,6 +145,8 @@
 - (void)searchbarDidChangeText:(NSString *)text {
     if (!text.length) {
         [self.users removeAllObjects];
+        self.pages = 1;
+        self.currentPageNumber = 1;
         [self.tableView reloadData];
         self.isFetching = NO;
     } else {
@@ -151,7 +156,7 @@
 
 - (void)searchBarBeginSearchingWithKeyword:(NSString *)keyword {
     if (keyword.length > 0) {
-        [self fetchDataWithKeyword:keyword onPageNumber:1];
+        [self fetchDataWithKeyword:keyword onPageNumber:1 repeated:NO];
     }
 }
 
