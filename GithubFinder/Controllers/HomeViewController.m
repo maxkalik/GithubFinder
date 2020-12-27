@@ -15,6 +15,8 @@
 #import "UserResponse.h"
 #import "UIViewController+Alert.h"
 
+#import "Spinner.h"
+
 #define ITEMS_PER_PAGE 50
 
 @interface HomeViewController ()<HomeTableViewDataSourceDelegate, HomeSearchBarDelegate>
@@ -23,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic, nullable) NSMutableArray<UserResponse *> *users;
-@property (strong, nonatomic) UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) Spinner *spinner;
 
 @property (strong, nonatomic) NSString *searchKeyword;
 
@@ -45,43 +47,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Github Finder";
-    
     self.users = [[NSMutableArray alloc] init];
-    
-    self.tableViewDataSource = [[HomeTableViewDataSource alloc] initWithTableView:self.tableView andData:self.users];
-    self.homeSearchBar = [[HomeSearchBar alloc] initWithSearchBar:self.searchBar];
-    self.tableViewDataSource.delegate = self;
-    self.homeSearchBar.delegate = self;
-    
-    // [self setupSearchBar];
-    [self setupSpinner];
+    [self setupUI];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
-    
 }
 
-- (void)setupSpinner {
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+- (void)setupUI {
+    self.title = @"Github Finder";
+    self.tableViewDataSource = [[HomeTableViewDataSource alloc] initWithTableView:self.tableView andData:self.users];
+    self.homeSearchBar = [[HomeSearchBar alloc] initWithSearchBar:self.searchBar];
+    self.tableViewDataSource.delegate = self;
+    self.homeSearchBar.delegate = self;
+    self.spinner = [[Spinner alloc] init];
     [self.view addSubview:self.spinner];
-    self.spinner.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
+- (void)setIsFetching:(BOOL)isFetching {
+    if (isFetching) {
+        [self.spinner show];
+    } else {
+        [self.spinner hide];
+    }
+}
 
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
-}
-
-- (void)startLoading {
-    [self.spinner startAnimating];
-    self.isFetching = YES;
-}
-
-- (void)stopLoading {
-    [self.spinner stopAnimating];
-    self.isFetching = NO;
 }
 
 - (void)initialSearchDataFromDict: (NSDictionary *)dict {
@@ -99,7 +92,7 @@
 - (void)updateTableView {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableViewDataSource updateTableViewData:self.users];
-        [self stopLoading];
+        self.isFetching = NO;
     });
 }
 
@@ -141,7 +134,7 @@
             }
         } else if (errorMessage) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self stopLoading];
+                self.isFetching = NO;
                 [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
             });
         }
@@ -154,9 +147,9 @@
     if (!text.length) {
         [self.users removeAllObjects];
         [self.tableView reloadData];
-        [self stopLoading];
+        self.isFetching = NO;
     } else {
-        [self startLoading];
+        self.isFetching = YES;
     }
 }
 
@@ -184,7 +177,7 @@
 }
 
 - (void)scrollDidEnd {
-    [self startLoading];
+    self.isFetching = YES;
     [self fetchOnScrollDidEnd];
 }
 
