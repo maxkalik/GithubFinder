@@ -13,6 +13,7 @@
 		118963162591573C002D2522 /* HomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 118963142591573C002D2522 /* HomeTableViewCell.m */; };
 		118963172591573C002D2522 /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 118963152591573C002D2522 /* HomeTableViewCell.xib */; };
 		1189632425922BBD002D2522 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1189632325922BBD002D2522 /* DetailsViewController.m */; };
+		11A0C6992598072500C65F03 /* HomeSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A0C6982598072500C65F03 /* HomeSearchBar.m */; };
 		11C837E72592899F00268BDD /* UIImageView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C837E62592899F00268BDD /* UIImageView+Category.m */; };
 		11D082682590CFD400978954 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D082672590CFD400978954 /* AppDelegate.m */; };
 		11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D0826A2590CFD400978954 /* SceneDelegate.m */; };
@@ -40,6 +41,8 @@
 		118963152591573C002D2522 /* HomeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
 		1189632225922BBD002D2522 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		1189632325922BBD002D2522 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		11A0C6972598072500C65F03 /* HomeSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeSearchBar.h; sourceTree = "<group>"; };
+		11A0C6982598072500C65F03 /* HomeSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSearchBar.m; sourceTree = "<group>"; };
 		11C837E52592899F00268BDD /* UIImageView+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Category.h"; sourceTree = "<group>"; };
 		11C837E62592899F00268BDD /* UIImageView+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Category.m"; sourceTree = "<group>"; };
 		11D082632590CFD400978954 /* GithubFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +113,8 @@
 				11DFB6EF2593FBD20090572E /* TypographyHelper.m */,
 				11DFB7032597D5680090572E /* HomeTableViewDataSource.h */,
 				11DFB7042597D5680090572E /* HomeTableViewDataSource.m */,
+				11A0C6972598072500C65F03 /* HomeSearchBar.h */,
+				11A0C6982598072500C65F03 /* HomeSearchBar.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				11D0826B2590CFD400978954 /* SceneDelegate.m in Sources */,
 				11DFB6F825943B830090572E /* UserResponse.m in Sources */,
 				1189632425922BBD002D2522 /* DetailsViewController.m in Sources */,
+				11A0C6992598072500C65F03 /* HomeSearchBar.m in Sources */,
 				11DFB6FC25979C760090572E /* UIViewController+Alert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

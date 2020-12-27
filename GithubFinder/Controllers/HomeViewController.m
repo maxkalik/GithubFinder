@@ -8,6 +8,7 @@
 #import "HomeViewController.h"
 #import "HTTPService.h"
 #import "HomeTableViewDataSource.h"
+#import "HomeSearchBar.h"
 
 #import "DetailsViewController.h"
 #import "NSDictionary+Safety.h"
@@ -16,16 +17,16 @@
 
 #define ITEMS_PER_PAGE 50
 
-@interface HomeViewController ()<UISearchBarDelegate, HomeTableViewDataSourceDelegate>
+@interface HomeViewController ()<HomeTableViewDataSourceDelegate, HomeSearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic, nullable) NSMutableArray<UserResponse *> *users;
-@property (strong, nonatomic, nullable) NSTimer *timer;
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 
 @property (strong, nonatomic) NSString *searchKeyword;
+
 @property (nonatomic, assign) int currentPageNumber;
 @property (nonatomic, assign) int pages;
 @property (nonatomic, assign) BOOL isFetching;
@@ -33,6 +34,7 @@
 @property (nonatomic, assign) int lastItems;
 
 @property (nonatomic, strong, nullable) HomeTableViewDataSource *tableViewDataSource;
+@property (nonatomic, strong, nullable) HomeSearchBar *homeSearchBar;
 
 - (void)appendDataFromResponse:(NSDictionary *)dataDict;
 
@@ -45,18 +47,20 @@
     [super viewDidLoad];
     self.title = @"Github Finder";
     
-    // [self setupTableView];
+    self.users = [[NSMutableArray alloc] init];
     
     self.tableViewDataSource = [[HomeTableViewDataSource alloc] initWithTableView:self.tableView andData:self.users];
+    self.homeSearchBar = [[HomeSearchBar alloc] initWithSearchBar:self.searchBar];
     self.tableViewDataSource.delegate = self;
+    self.homeSearchBar.delegate = self;
     
-    [self setupSearchBar];
+    // [self setupSearchBar];
     [self setupSpinner];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
-    self.users = [[NSMutableArray alloc] init];
+    
 }
 
 - (void)setupSpinner {
@@ -65,41 +69,9 @@
     self.spinner.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
 }
 
-- (void)setupSearchBar {
-    self.searchBar.delegate = self;
-    
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self.searchBar action:@selector(resignFirstResponder)];
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    toolbar.items = [NSArray arrayWithObject:barButton];
-    self.searchBar.inputAccessoryView = toolbar;
-    
-    self.searchBar.placeholder = @"Search Github User";
-    [self.searchBar setBackgroundImage:[UIImage new]];
-}
 
 - (void)dismissKeyboard:(UITapGestureRecognizer *) sender {
     [self.searchBar resignFirstResponder];
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
-    if (!searchText.length) {
-        self.users = nil;
-        // [self.tableView reloadData];
-        [self.tableViewDataSource reloadData];
-    }
-    
-    if (self.timer != nil) {
-        [self.timer invalidate];
-        self.timer = nil;
-    }
-    
-    if (searchText.length > 0) {
-        [self startLoading];
-    }
-    
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(searchForKeyword:) userInfo:searchText repeats:NO];
-    
 }
 
 - (void)startLoading {
@@ -112,36 +84,8 @@
     self.isFetching = NO;
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self.searchBar resignFirstResponder];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-}
-
-- (void)searchForKeyword:(NSTimer *)timer {
-    NSString *keyword = timer.userInfo;
-    if (keyword.length > 0) {
-        [self startLoading];
-        [[HTTPService sharedInstance] fetchUsersByName:keyword fromPage:1 withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-            self.searchKeyword = keyword;
-            if (dataDict) {
-                [self initialSearchDataFromDict:dataDict];
-            } else if (errorMessage) {
-                [self stopLoading];
-                [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
-            }
-        }];
-    }
-}
-
 - (void)initialSearchDataFromDict: (NSDictionary *)dict {
-    self.currentPageNumber = 1;
+    self.currentPageNumber = 2;
     NSNumber *totalCount = [dict safeObjectForKey:@"total_count"];
     self.totalDataItems = totalCount;
     if (totalCount > 0) {
@@ -175,29 +119,64 @@
         [self appendDataFromResponse:dict];
         self.currentPageNumber++;
         [self updateTableView];
+        
     }
 }
 
 - (void)fetchOnScrollDidEnd {
     if (self.pages >= self.currentPageNumber) {
-        // NSLog(@"fetching..., page: %d", self.currentPageNumber);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[HTTPService sharedInstance] fetchUsersByName:self.searchKeyword fromPage:self.currentPageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
-                if (dataDict) {
-                    [self repeatedSearchDataFromDict:dataDict];
-                } else if (errorMessage) {
-                    [self stopLoading];
-                    [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
-                }
-            }];
-        });
+        [self fetchDataWithKeyword:self.searchKeyword onPageNumber:self.currentPageNumber];
     }
+}
+
+- (void)fetchDataWithKeyword:(NSString *)keyword onPageNumber:(int)pageNumber {
+    NSLog(@"keyword: %@", keyword);
+    [[HTTPService sharedInstance] fetchUsersByName:keyword fromPage:pageNumber withAmount:ITEMS_PER_PAGE :^(NSDictionary * _Nullable dataDict, NSString * _Nullable errorMessage) {
+        if (dataDict) {
+            if (pageNumber > 1) {
+                [self repeatedSearchDataFromDict:dataDict];
+            } else {
+                self.searchKeyword = keyword;
+                [self initialSearchDataFromDict:dataDict];
+            }
+        } else if (errorMessage) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self stopLoading];
+                [self simpleAlertWithTitle:@"Error" withMessage:errorMessage :nil];
+            });
+        }
+    }];
+}
+
+// MARK: - HomeSearchBarDelegate
+
+- (void)searchbarDidChangeText:(NSString *)text {
+    if (!text.length) {
+        [self.users removeAllObjects];
+        [self.tableView reloadData];
+        [self stopLoading];
+    } else {
+        [self startLoading];
+    }
+}
+
+- (void)searchBarBeginSearchingWithKeyword:(NSString *)keyword {
+    if (keyword.length > 0) {
+        [self fetchDataWithKeyword:keyword onPageNumber:1];
+    }
+}
+
+- (void)searchBarTextDidBeginEditing {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 // MARK: - HomeTableViewDataSourceDelegate
 
 - (void)rowDidSelectWithUrl:(nonnull NSURL *)url {
-    NSLog(@"%@", url);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DetailsViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
     vc.userUrl = url;
